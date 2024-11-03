@@ -10,27 +10,58 @@ def get_precipitaciones():
         response = requests.get(URL)
         data = response.json()
         
-        # Filtrar el pluviómetro específico
-        pluviometro = next(
-            (feature for feature in data['features'] 
-             if feature['attributes']['DenominacionPtoMedicion'] == "Pluviómetro en MC en Cedacero, Rbla La Azohía"),
-            None
-        )
+        # Lista de estaciones que queremos monitorizar
+        estaciones_deseadas = [
+            "Pluviómetro en MC en Cedacero, Rbla La Azohía",
+            "Pluviómetro en MC en Los Patojos, Rbla Benipila",
+            # Añade aquí más estaciones que quieras monitorizar
+        ]
         
-        if pluviometro:
-            # Crear nombre de archivo con timestamp
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M')
-            filename = f'data/precipitaciones_{timestamp}.json'
+        # Filtrar las estaciones deseadas
+        estaciones_filtradas = [
+            feature for feature in data['features']
+            if feature['attributes']['DenominacionPtoMedicion'] in estaciones_deseadas
+        ]
+        
+        if estaciones_filtradas:
+            # Crear estructura de datos con timestamp
+            timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            datos_salida = {
+                "timestamp": timestamp,
+                "estaciones": []
+            }
             
-            # Guardar datos
-            with open(filename, 'w') as f:
-                json.dump(pluviometro, f, indent=2)
+            # Procesar cada estación
+            for estacion in estaciones_filtradas:
+                datos_estacion = {
+                    "nombre": estacion['attributes']['DenominacionPtoMedicion'],
+                    "municipio": estacion['attributes']['Municipio'],
+                    "codigo": estacion['attributes']['CodVariableHidrologica'],
+                    "mediciones": {
+                        "ultima_hora": estacion['attributes']['LluviaUltimaHora'],
+                        "ultimas_3h": estacion['attributes']['LluviaUltimas3Horas'],
+                        "ultimas_6h": estacion['attributes']['LluviaUltimas6Horas'],
+                        "ultimas_12h": estacion['attributes']['LluviaUltimas12Horas'],
+                        "ultimas_24h": estacion['attributes']['LluviaUltimas24Horas']
+                    },
+                    "coordenadas": estacion['geometry']
+                }
+                datos_salida["estaciones"].append(datos_estacion)
+            
+            # Guardar en archivo con timestamp en nombre
+            timestamp_archivo = datetime.now().strftime('%Y%m%d_%H%M')
+            filename = f'data/precipitaciones_{timestamp_archivo}.json'
+            
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(datos_salida, f, indent=2, ensure_ascii=False)
             
             print(f'Datos guardados en {filename}')
+            print(f'Estaciones procesadas: {len(estaciones_filtradas)}')
             return True
             
-        print('Pluviómetro no encontrado')
-        return False
+        else:
+            print('No se encontraron las estaciones buscadas')
+            return False
         
     except Exception as e:
         print(f'Error: {str(e)}')
@@ -38,4 +69,3 @@ def get_precipitaciones():
 
 if __name__ == "__main__":
     get_precipitaciones()
-
