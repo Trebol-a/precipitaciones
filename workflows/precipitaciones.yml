@@ -1,0 +1,38 @@
+name: Get Precipitaciones
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # Cada 15 minutos
+  workflow_dispatch:  # Permite ejecutar manualmente desde GitHub
+
+jobs:
+  get-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: main
+        
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+        
+    - name: Create data directory
+      run: mkdir -p data
+        
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+        
+    - name: Run script
+      run: python get_precipitaciones.py
+        
+    - name: Commit files
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add data/
+        git commit -m "Update precipitaciones data" -a || echo "No changes to commit"
+        git push
+
