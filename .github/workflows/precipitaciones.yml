@@ -1,10 +1,8 @@
 name: Get Precipitaciones
-
 on:
   schedule:
     - cron: '*/15 * * * *'  # Cada 15 minutos
   workflow_dispatch:  # Permite ejecutar manualmente desde GitHub
-
 jobs:
   get-data:
     runs-on: ubuntu-latest
@@ -28,6 +26,30 @@ jobs:
     - name: Run script
       run: python get_precipitaciones.py
         
+    - name: Cleanup old files
+      run: |
+        python - <<EOF
+        import os
+        import datetime
+        from pathlib import Path
+
+        # Configuración
+        MAX_AGE_DAYS = 7  # Ajusta este valor según necesites
+        DATA_DIR = "data"
+
+        current_time = datetime.datetime.now()
+        data_path = Path(DATA_DIR)
+
+        for file_path in data_path.glob('*'):
+            if file_path.is_file():
+                file_modified = datetime.datetime.fromtimestamp(file_path.stat().st_mtime)
+                age = (current_time - file_modified).days
+                
+                if age > MAX_AGE_DAYS:
+                    print(f"Eliminando archivo antiguo: {file_path}")
+                    file_path.unlink()
+        EOF
+        
     - name: Commit files
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -35,4 +57,3 @@ jobs:
         git add data/
         git commit -m "Update precipitaciones data" -a || echo "No changes to commit"
         git push
-
