@@ -1,7 +1,7 @@
 import requests
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Parámetros configurables
 CADUCIDAD_DIAS = 3  # Antigüedad máxima en días
