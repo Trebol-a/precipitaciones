@@ -29,7 +29,33 @@ def process_data(data, estaciones_deseadas):
         if feature['attributes']['DenominacionPtoMedicion'] in estaciones_deseadas
     ]
 
-def controlar_archivos(directorio, maximo_archivos):
+def controlar_archivos(directorio, maximo_archivos, caducidad_dias):
+    """
+    Mantiene el número de archivos en el directorio por debajo de `maximo_archivos`
+    y elimina los archivos más viejos que `caducidad_dias`.
+    """
+    archivos = [
+        os.path.join(directorio, archivo) for archivo in os.listdir(directorio)
+        if os.path.isfile(os.path.join(directorio, archivo))
+    ]
+    
+    # Ordenar por fecha de modificación (antiguos primero)
+    archivos.sort(key=lambda x: os.path.getmtime(x))
+    
+    fecha_limite = datetime.now() - timedelta(days=caducidad_dias)
+    
+    for archivo in archivos:
+        if len(archivos) <= maximo_archivos:
+            break
+        
+        fecha_modificacion = datetime.fromtimestamp(os.path.getmtime(archivo))
+        
+        if fecha_modificacion < fecha_limite or len(archivos) > maximo_archivos:
+            os.remove(archivo)
+            archivos.remove(archivo)
+            print(f"Archivo eliminado: {archivo}")
+            
+def controlar_archivos_old(directorio, maximo_archivos):
     """
     Mantiene el número de archivos en el directorio por debajo de `maximo_archivos`.
     Elimina el archivo más viejo si se supera el límite.
