@@ -68,14 +68,7 @@ def controlar_archivos_old(directorio, maximo_archivos):
     # Ordenar por fecha de modificación (antiguos primero)
     archivos.sort(key=lambda x: os.path.getmtime(x))
     
-    if len(archivos) > maximo_archivos: Traceback (most recent call last):
-  File "/home/runner/work/precipitaciones/precipitaciones/get_precipitaciones.py", line 135, in <module>
-    get_precipitaciones()
-  File "/home/runner/work/precipitaciones/precipitaciones/get_precipitaciones.py", line 127, in get_precipitaciones
-    save_data(estaciones_procesadas)
-  File "/home/runner/work/precipitaciones/precipitaciones/get_precipitaciones.py", line 81, in save_data
-    controlar_archivos(output_dir, MAXIMO_ARCHIVOS)
-TypeError: controlar_archivos() missing 1 required positional argument: 'caducidad_dias'
+    if len(archivos) > maximo_archivos:
         archivo_mas_viejo = archivos[0]
         os.remove(archivo_mas_viejo)
         print(f"Archivo eliminado por superar el límite: {archivo_mas_viejo}")
