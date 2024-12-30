@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 # Parámetros configurables
-CADUCIDAD_DIAS = 15  # Antigüedad máxima en días
+CADUCIDAD_DIAS = 3  # Antigüedad máxima en días
 CONSULTA_MINUTOS = 15  # Frecuencia de generación en minutos
 MAXIMO_ARCHIVOS = (24 * 60 // CONSULTA_MINUTOS) * CADUCIDAD_DIAS  # Archivos permitidos
 
