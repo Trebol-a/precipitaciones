@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos de Estaciones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background: #0077cc;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .container {
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #0077cc;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Datos de Pluviometría</h1>
+    </header>
+    <div class="container">
+        <h2>Estaciones Deseadas</h2>
+        <table id="estaciones-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Municipio</th>
+                    <th>Código</th>
+                    <th>Última hora</th>
+                    <th>Últimas 3 horas</th>
+                    <th>Últimas 6 horas</th>
+                    <th>Últimas 12 horas</th>
+                    <th>Últimas 24 horas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Contenido generado dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        async function cargarDatos() {
+            try {
+                const response = await fetch('../precipitaciones.json'); // Ruta al archivo JSON
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const estaciones = data.estaciones;
+                const estacionesDeseadas = [
+                    "Pluviómetro en MC en Cedacero, Rbla La Azohía",
+                    "Pluviómetro en MC en Los Patojos, Rbla Benipila"
+                ];
+
+                const tablaCuerpo = document.querySelector('#estaciones-table tbody');
+
+                estaciones.forEach(estacion => {
+                    if (estacionesDeseadas.includes(estacion.nombre)) {
+                        const fila = document.createElement('tr');
+
+                        fila.innerHTML = `
+                            <td>${estacion.nombre}</td>
+                            <td>${estacion.municipio}</td>
+                            <td>${estacion.codigo}</td>
+                            <td>${estacion.mediciones.ultima_hora}</td>
+                            <td>${estacion.mediciones.ultimas_3h}</td>
+                            <td>${estacion.mediciones.ultimas_6h}</td>
+                            <td>${estacion.mediciones.ultimas_12h}</td>
+                            <td>${estacion.mediciones.ultimas_24h}</td>
+                        `;
+
+                        tablaCuerpo.appendChild(fila);
+                    }
+                });
+            } catch (error) {
+                console.error('Error al cargar los datos:', error);
+            }
+        }
+
+        // Cargar los datos cuando la página se carga
+        document.addEventListener('DOMContentLoaded', cargarDatos);
+    </script>
+</body>
+</html>
