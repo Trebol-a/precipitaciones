@@ -34,7 +34,7 @@ jobs:
         from pathlib import Path
 
         # Configuración
-        MAX_AGE_DAYS = 7  # Ajusta este valor según necesites
+        MAX_AGE_DAYS = 2  # Ajusta este valor según necesites
         DATA_DIR = "data"
 
         current_time = datetime.datetime.now()
