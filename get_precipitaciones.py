@@ -30,10 +30,6 @@ def process_data(data, estaciones_deseadas):
     ]
 
 def controlar_archivos(directorio, maximo_archivos, caducidad_dias):
-    """
-    Mantiene el número de archivos en el directorio por debajo de `maximo_archivos`
-    y elimina los archivos más viejos que `caducidad_dias`.
-    """
     archivos = [
         os.path.join(directorio, archivo) for archivo in os.listdir(directorio)
         if os.path.isfile(os.path.join(directorio, archivo))
@@ -54,24 +50,6 @@ def controlar_archivos(directorio, maximo_archivos, caducidad_dias):
             os.remove(archivo)
             archivos.remove(archivo)
             print(f"Archivo eliminado: {archivo}")
-            
-def controlar_archivos_old(directorio, maximo_archivos):
-    """
-    Mantiene el número de archivos en el directorio por debajo de `maximo_archivos`.
-    Elimina el archivo más viejo si se supera el límite.
-    """
-    archivos = [
-        os.path.join(directorio, archivo) for archivo in os.listdir(directorio)
-        if os.path.isfile(os.path.join(directorio, archivo))
-    ]
-    
-    # Ordenar por fecha de modificación (antiguos primero)
-    archivos.sort(key=lambda x: os.path.getmtime(x))
-    
-    if len(archivos) > maximo_archivos:
-        archivo_mas_viejo = archivos[0]
-        os.remove(archivo_mas_viejo)
-        print(f"Archivo eliminado por superar el límite: {archivo_mas_viejo}")
 
 def save_data(estaciones, output_dir='data'):
     # Crear el directorio si no existe
@@ -92,6 +70,12 @@ def save_data(estaciones, output_dir='data'):
     
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(datos_salida, f, indent=2, ensure_ascii=False)
+    
+    # Crear copia en el directorio padre
+    copia_path = os.path.join(os.path.dirname(output_dir), 'precipitaciones.json')
+    with open(copia_path, 'w', encoding='utf-8') as f:
+        json.dump(datos_salida, f, indent=2, ensure_ascii=False)
+    print(f'Copia creada en {copia_path}')
     
     print(f'Datos guardados en {filename}')
     return filename
