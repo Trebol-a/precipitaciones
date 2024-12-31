@@ -72,7 +72,7 @@ def save_data(estaciones, output_dir='data'):
         json.dump(datos_salida, f, indent=2, ensure_ascii=False)
     
     # Crear copia en el directorio padre
-    copia_path = os.path.join(os.path.dirname(output_dir), 'precipitaciones.json')
+    copia_path = os.path.join(os.path.dirname(output_dir), 'DOCS/precipitaciones.json')
     with open(copia_path, 'w', encoding='utf-8') as f:
         json.dump(datos_salida, f, indent=2, ensure_ascii=False)
     print(f'Copia creada en {copia_path}')

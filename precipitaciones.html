@@ -67,7 +67,7 @@
     <script>
         async function cargarDatos() {
             try {
-                const response = await fetch('precipitaciones.json'); // Ruta al archivo JSON
+                const response = await fetch('precipitaciones.json'); // Ruta relativa al archivo JSON en la carpeta DOCS
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
