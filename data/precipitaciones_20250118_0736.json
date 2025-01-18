@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-01-13 15:21:36",
+  "timestamp": "2025-01-18 07:36:56",
   "estaciones": [
     {
       "nombre": "Pluviómetro en MC en Los Patojos, Rbla Benipila",
@@ -9,8 +9,8 @@
         "ultima_hora": 0.0,
         "ultimas_3h": 0.0,
         "ultimas_6h": 0.0,
-        "ultimas_12h": 0.0,
-        "ultimas_24h": 0.0
+        "ultimas_12h": 2.0999999,
+        "ultimas_24h": 2.4000001
       },
       "coordenadas": {
         "x": 675339,
@@ -25,8 +25,8 @@
         "ultima_hora": 0.0,
         "ultimas_3h": 0.0,
         "ultimas_6h": 0.0,
-        "ultimas_12h": 0.0,
-        "ultimas_24h": 0.0
+        "ultimas_12h": 0.266,
+        "ultimas_24h": 0.266
       },
       "coordenadas": {
         "x": 663554,
