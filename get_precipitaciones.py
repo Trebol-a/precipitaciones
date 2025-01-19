@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 # Parámetros configurables
 CADUCIDAD_DIAS = 3  # Antigüedad máxima en días
 CONSULTA_MINUTOS = 15  # Frecuencia de generación en minutos
-MAXIMO_ARCHIVOS = (24 * 60 // CONSULTA_MINUTOS) * CADUCIDAD_DIAS  # Archivos permitidos
+MAXIMO_ARCHIVOS = 15  # Archivos permitidos
 
 URL = "https://www.chsegura.es/server/rest/services/VISOR_CHSIC3/VISOR_PUBLICO_ETRS89_v5_Web_Capas/MapServer/13/query?f=json&returnGeometry=true&spatialRel=esriSpatialRelIntersects&geometry=%7B%22xmin%22%3A-97839.39620500008%2C%22ymin%22%3A2406849.146643002%2C%22xmax%22%3A2602527.9390530023%2C%22ymax%22%3A5107216.481901004%2C%22spatialReference%22%3A%7B%22wkid%22%3A25830%2C%22latestWkid%22%3A25830%7D%7D&geometryType=esriGeometryEnvelope&inSR=25830&outFields=*&returnCentroid=false&returnExceededLimitFeatures=false&orderByFields=DenominacionPtoMedicion%20DESC&outSR=25830"
 
