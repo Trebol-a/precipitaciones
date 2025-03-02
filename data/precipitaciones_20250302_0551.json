@@ -1,16 +1,16 @@
 {
-  "timestamp": "2025-03-01 16:41:29",
+  "timestamp": "2025-03-02 05:51:44",
   "estaciones": [
     {
       "nombre": "Pluviómetro en MC en Los Patojos, Rbla Benipila",
       "municipio": "Cartagena",
       "codigo": "06A11P01",
       "mediciones": {
-        "ultima_hora": 0.2,
-        "ultimas_3h": 33.90000153,
-        "ultimas_6h": 52.59999847,
-        "ultimas_12h": 70.0,
-        "ultimas_24h": 71.5
+        "ultima_hora": 1.89999998,
+        "ultimas_3h": 4.0999999,
+        "ultimas_6h": 10.39999962,
+        "ultimas_12h": 31.20000076,
+        "ultimas_24h": 99.09999847
       },
       "coordenadas": {
         "x": 675339,
@@ -22,11 +22,11 @@
       "municipio": "Cartagena",
       "codigo": "06A13P01",
       "mediciones": {
-        "ultima_hora": 0.53200001,
-        "ultimas_3h": 13.83199978,
-        "ultimas_6h": 31.65399933,
-        "ultimas_12h": 74.7460022,
-        "ultimas_24h": 80.86399841
+        "ultima_hora": 1.33000004,
+        "ultimas_3h": 5.58599997,
+        "ultimas_6h": 17.02400017,
+        "ultimas_12h": 34.04800034,
+        "ultimas_24h": 104.80400085
       },
       "coordenadas": {
         "x": 663554,
